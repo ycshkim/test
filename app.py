@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+
 st.set_page_config(
   page_title="문화재 훼손"
 )
@@ -8,24 +8,17 @@ st.set_page_config(
 st.title("문화재 훼손 예측")
 st.divider()
 
+import matplotlib.pyplot as plt
 
+fig, ax = plt.subplots()
 
-
-
-df = pd.read_csv("yc_heritage_detail_enriched.csv")
-
-plt.rcParams['font.family'] = 'Malgun Gothic'
-plt.rcParams['axes.unicode_minus'] = False
-
-top = df['시군구명'].value_counts()
-
-top.plot(
-    kind='bar',
-    figsize=(8,5)
+df["국가유산종목"].value_counts().plot(
+    kind="pie",
+    autopct="%1.1f%%",
+    ax=ax
 )
 
-plt.title('시군구별 문화재 수')
-plt.xlabel('시군구')
-plt.ylabel('문화재 수')
-plt.tight_layout()
-plt.show()
+ax.set_ylabel("")
+st.pyplot(fig)
+
+
