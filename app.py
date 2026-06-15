@@ -2,23 +2,19 @@ import streamlit as st
 import pandas as pd
 
 st.set_page_config(
-  page_title="문화재 훼손"
+    page_title="문화재 훼손"
 )
 
 st.title("문화재 훼손 예측")
 st.divider()
 
-import matplotlib.pyplot as plt
+# 데이터 불러오기
+df = pd.read_csv("yc_heritage_detail_enriched.csv")
 
-fig, ax = plt.subplots()
+st.subheader("시군구별 문화재 수")
 
-df["국가유산종목"].value_counts().plot(
-    kind="pie",
-    autopct="%1.1f%%",
-    ax=ax
-)
+# 시군구별 문화재 개수 집계
+region_count = df["시군구명"].value_counts()
 
-ax.set_ylabel("")
-st.pyplot(fig)
-
-
+# 그래프 출력
+st.bar_chart(region_count)
