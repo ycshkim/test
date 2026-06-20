@@ -15,12 +15,22 @@ map_df.columns = ["lat", "lon"]
 st.map(map_df)
 
 
+import matplotlib.pyplot as plt
+
 st.subheader("국가유산 종목별 개수")
+
 type_count = df["국가유산종목"].value_counts()
-# 상위 5개
+
+# 상위 5개 + 기타
 top5 = type_count.head(5)
-# 나머지 합계
-etc = type_count.iloc[5:].sum()
-# 기타 추가
-top5["기타"] = etc
-st.bar_chart(top5)
+top5["기타"] = type_count.iloc[5:].sum()
+
+fig, ax = plt.subplots(figsize=(8, 4))
+
+ax.barh(top5.index, top5.values)
+
+ax.set_xlabel("개수")
+ax.set_ylabel("국가유산 종목")
+ax.set_title("국가유산 종목별 개수")
+
+st.pyplot(fig)
