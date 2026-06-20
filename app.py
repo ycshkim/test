@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 st.set_page_config(
-    page_totle="문화재 훼손 예측"
+    page_title="문화재 훼손 예측"
 )
 st.title("문화재 훼손 예측")
 st.divider()
