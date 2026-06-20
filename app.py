@@ -9,10 +9,14 @@ st.divider()
 df=pd.read_csv("data/yc_heritage_detail_enriched.csv")
 st.dataframe(df)
 
+st.subheader("문화재 위치")
+
+map_df = df[["위도", "경도"]].dropna()
+map_df.columns = ["lat", "lon"]
+
+st.map(map_df)
 
 
-import plotly.express as px
-import pandas as pd
 
 st.subheader("국가유산 종목별 개수")
 
