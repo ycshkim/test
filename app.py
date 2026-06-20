@@ -64,3 +64,8 @@ fig.update_layout(
     xaxis_title="",
     yaxis_title=""
 )
+st.plotly_chart(
+    fig,
+    use_container_width=True,
+    key="heritage_type_chart"
+)
