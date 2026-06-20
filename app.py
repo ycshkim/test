@@ -10,14 +10,17 @@ st.dataframe(df)
 
 
 st.subheader("문화재 위치")
-
 map_df = df[["위도", "경도"]].dropna()
 map_df.columns = ["lat", "lon"]
-
 st.map(map_df)
 
+
 st.subheader("국가유산 종목별 개수")
-
 type_count = df["국가유산종목"].value_counts()
-
-st.bar_chart(type_count)
+# 상위 5개
+top5 = type_count.head(5)
+# 나머지 합계
+etc = type_count.iloc[5:].sum()
+# 기타 추가
+top5["기타"] = etc
+st.bar_chart(top5)
