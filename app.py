@@ -18,13 +18,13 @@ st.subheader("국가유산 종목별 개수")
 
 type_count = df["국가유산종목"].value_counts()
 
-# 상위 5개 추출
+# 상위 5개
 top5 = type_count.head(5).copy()
 
-# 나머지를 기타로 합치기
-etc_count = type_count.iloc[5:].sum()
+# 나머지는 기타
+top5["기타"] = type_count.iloc[5:].sum()
 
-# 기타 추가
-top5["기타"] = etc_count
+# 개수 많은 순으로 정렬
+top5 = top5.sort_values(ascending=False)
 
 st.bar_chart(top5)
