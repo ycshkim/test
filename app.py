@@ -10,11 +10,6 @@ df=pd.read_csv("data/yc_heritage_detail_enriched.csv")
 st.dataframe(df)
 
 
-st.subheader("문화재 위치")
-map_df = df[["위도", "경도"]].dropna()
-map_df.columns = ["lat", "lon"]
-st.map(map_df)
-
 
 import plotly.express as px
 import pandas as pd
@@ -38,22 +33,26 @@ chart_df = pd.DataFrame({
 # 기타를 마지막에 추가
 chart_df.loc[len(chart_df)] = ["기타", etc_count]
 
-# 가로 막대그래프
 fig = px.bar(
     chart_df,
     x="개수",
     y="종목",
     orientation="h",
-    text="개수"
+    text="개수",
+    title="국가유산 종목별 개수"
 )
 
-# 축 제목 제거 + 기타를 맨 아래로 유지
+# 축 제목 설정
 fig.update_layout(
-    xaxis_title="",
-    yaxis_title="",
-    yaxis=dict(categoryorder="array",
-               categoryarray=chart_df["종목"].tolist()[::-1])
+    xaxis_title="문화재 개수",
+    yaxis_title="국가유산 종목",
+    yaxis=dict(
+        categoryorder="array",
+        categoryarray=chart_df["종목"].tolist()[::-1]
+    )
 )
+
+st.plotly_chart(fig, use_container_width=True)
 
 st.plotly_chart(fig, use_container_width=True)
 fig.update_layout(
