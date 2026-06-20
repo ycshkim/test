@@ -21,10 +21,13 @@ type_count = df["국가유산종목"].value_counts()
 # 상위 5개
 top5 = type_count.head(5).copy()
 
-# 나머지는 기타
-top5["기타"] = type_count.iloc[5:].sum()
+# 나머지 합계
+etc_count = type_count.iloc[5:].sum()
 
-# 개수 많은 순으로 정렬
+# 상위 5개만 내림차순 정렬
 top5 = top5.sort_values(ascending=False)
+
+# 기타를 항상 마지막에 추가
+top5["기타"] = etc_count
 
 st.bar_chart(top5)
