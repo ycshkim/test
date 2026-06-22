@@ -103,10 +103,6 @@ else:
     st.warning("해당 날짜의 데이터가 없습니다.")
 
 
-
-import streamlit as st
-import pandas as pd
-
 st.set_page_config(
     page_title="영천 환경 리포트",
     page_icon="🌎",
