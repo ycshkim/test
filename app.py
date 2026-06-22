@@ -67,9 +67,8 @@ import streamlit as st
 import pandas as pd
 
 # 데이터 불러오기
-weather = pd.read_csv("data/yeongcheon_weather_daily.csv")
-air = pd.read_csv("data/air_quality.csv")
-
+weather = pd.read_csv("data/[2016_2025] yeongcheon_weather_daily.csv")
+air = pd.read_csv("data/[2019_2025] air_quality.csv")
 # 날짜 형식 통일
 weather["date"] = pd.to_datetime(weather["date"])
 air["date"] = pd.to_datetime(air["date"])
