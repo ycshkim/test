@@ -58,3 +58,76 @@ st.plotly_chart(
     use_container_width=True,
     key="heritage_type_chart"
 )
+
+
+
+
+
+import streamlit as st
+import pandas as pd
+
+# 데이터 불러오기
+weather = pd.read_csv("data/yeongcheon_weather_daily.csv")
+air = pd.read_csv("data/air_quality.csv")
+
+# 날짜 형식 통일
+weather["date"] = pd.to_datetime(weather["date"])
+air["date"] = pd.to_datetime(air["date"])
+
+# 병합
+env = pd.merge(weather, air, on="date", how="inner")
+
+# 날짜 선택
+selected_date = st.date_input(
+    "날짜 선택",
+    value=env["date"].max().date()
+)
+
+# 선택 날짜 데이터
+row = env[env["date"].dt.date == selected_date]
+
+if not row.empty:
+
+    st.subheader(f"📅 {selected_date} 환경 데이터")
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        st.metric(
+            "평균기온",
+            f"{row['avg_temperature_c'].iloc[0]:.1f}℃"
+        )
+
+    with col2:
+        st.metric(
+            "습도",
+            f"{row['avg_relative_humidity_pct'].iloc[0]:.1f}%"
+        )
+
+    with col3:
+        st.metric(
+            "강수량",
+            f"{row['daily_precipitation_mm'].iloc[0]:.1f} mm"
+        )
+
+    with col4:
+        st.metric(
+            "풍속",
+            f"{row['avg_wind_speed_ms'].iloc[0]:.1f} m/s"
+        )
+
+    st.divider()
+
+    col5, col6, col7 = st.columns(3)
+
+    with col5:
+        st.metric("PM10", row["pm10"].iloc[0])
+
+    with col6:
+        st.metric("PM2.5", row["pm25"].iloc[0])
+
+    with col7:
+        st.metric("오존(O₃)", row["o3"].iloc[0])
+
+else:
+    st.warning("해당 날짜의 데이터가 없습니다.")
