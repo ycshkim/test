@@ -191,22 +191,3 @@ compare = pd.DataFrame({
 
 st.bar_chart(compare.set_index("항목"))
 
-# =========================
-# 문화재 훼손 위험도
-# =========================
-
-risk = "낮음"
-
-if humidity >= 80:
-    risk = "높음"
-elif humidity >= 70:
-    risk = "보통"
-
-st.subheader("🏛️ 문화재 훼손 위험도")
-
-if risk == "높음":
-    st.error("높음")
-elif risk == "보통":
-    st.warning("보통")
-else:
-    st.success("낮음")
